@@ -12,6 +12,9 @@ func main() {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		_, _ = io.WriteString(w, "<h1>Hello my</h1>")
 	})
+	mux.HandleFunc("/my2", func(w http.ResponseWriter, r *http.Request) {
+		_, _ = io.WriteString(w, "<h1>Hello my2</h1>")
+	})
 	mux.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		html := `
