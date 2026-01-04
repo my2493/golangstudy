@@ -187,6 +187,31 @@ func main() {
 			return
 		}
 	})
+	mux.HandleFunc("/my3", func(w http.ResponseWriter, r *http.Request) {
+		// 打开图片文件
+		file, err := os.Open("my3.jpg") // 替换为你的图片路径
+		if err != nil {
+			http.Error(w, "图片未找到", http.StatusNotFound)
+			return
+		}
+		defer func(file *os.File) {
+			err := file.Close()
+			if err != nil {
+
+			}
+		}(file)
+
+		// 设置 Content-Type（根据实际图片类型设置）
+		w.Header().Set("Content-Type", "image/jpeg")
+
+		// 将图片内容复制到响应
+		_, err = io.Copy(w, file)
+		if err != nil {
+			// 如果已经写了部分响应，可能无法再返回错误码，
+			// 但可以记录日志
+			return
+		}
+	})
 	if err := http.ListenAndServe(":8080", mux); err != nil {
 		fmt.Println(err)
 	}
